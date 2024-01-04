@@ -8,16 +8,15 @@
 import SwiftUI
 import FirebaseAuth
 struct SettingView: View {
-    @Binding var isLoggedIn: Bool // 登出狀態的綁定屬性
-    let yourEmail = Auth.auth().currentUser?.email ?? ""
+    @Binding var isLoggedIn: Bool
+    @State var yourEmail = Auth.auth().currentUser?.email ?? ""
         var body: some View {
             VStack {
                 Text("Your Email is: \(yourEmail)")
                 Button(action: {
-                                // 執行登出操作
                                 do {
                                     try Auth.auth().signOut()
-                                    isLoggedIn = false // 更新登出狀態
+                                    isLoggedIn = false
                                 } catch {
                                     print("登出時發生錯誤：\(error.localizedDescription)")
                                 }

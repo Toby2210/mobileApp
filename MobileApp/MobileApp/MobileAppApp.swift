@@ -27,9 +27,10 @@ struct MobileAppApp: App {
     }()
 
     var body: some Scene {
-        WindowGroup {
-            ContentView()
+            WindowGroup {
+                let dateHolder = DateHolder()
+                ContentView()
+                    .environmentObject(dateHolder)
+            }
         }
-        .modelContainer(sharedModelContainer)
-    }
 }
