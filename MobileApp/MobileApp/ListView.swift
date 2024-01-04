@@ -23,6 +23,7 @@ struct ListView: View {
         @State private var newMedicationName = ""
     @State private var newMedicationTakingTime = "00:00"
     @State private var newLastModifiedTime = "00:00"
+    
     let timeIntervals = stride(from: 0, to: 24 * 60, by: 30).map { minutes -> String in
         let hour = minutes / 60
         let minute = minutes % 60
@@ -53,9 +54,10 @@ struct ListView: View {
                             EditButton()
                                 .padding()
                                 .onTapGesture {
-                                    isAdding = true
+                                    withAnimation {
+                                        isAdding = true
+                                    }
                                 }
-                                .animation(.default)
                         }
                     }
                     HStack {
@@ -71,7 +73,11 @@ struct ListView: View {
                         .pickerStyle(MenuPickerStyle())
                         .padding()
                         
-                        Button(action: addNewMedication) {
+                        Button(action: {
+                            if !newMedicationName.isEmpty {
+                                addNewMedication()
+                            }
+                        }) {
                             Text("Add")
                                 .padding()
                                 .background(Color.blue)
@@ -124,6 +130,7 @@ struct ListView: View {
     func toggleIsTaken(for medication: Medication) {
         if let index = medications.firstIndex(where: { $0.id == medication.id }) {
             medications[index].isTaken.toggle()
+            medications[index].lastModifiedTime = Date()
             FirebaseManager.shared.saveMedications(medications)
         }
     }
@@ -134,12 +141,27 @@ struct ListView: View {
     }
     
     func loadUserMedications() {
-            FirebaseManager.shared.loadUserMedications { medications in
-                DispatchQueue.main.async {
-                    self.medications = medications
+        FirebaseManager.shared.loadUserMedications { medications in
+            DispatchQueue.main.async {
+                let calendar = Calendar.current
+                let today = calendar.startOfDay(for: Date())
+                
+                var updatedMedications = medications
+                
+                for index in 0..<updatedMedications.count {
+                    let medication = updatedMedications[index]
+                    let medicationDate = calendar.startOfDay(for: medication.lastModifiedTime) // 获取medication的凌晨时间
+                    
+                    if calendar.isDate(medicationDate, inSameDayAs: today) == false {
+                        updatedMedications[index].isTaken = false
+                    }
                 }
+                
+                self.medications = updatedMedications
+                FirebaseManager.shared.saveMedications(self.medications)
             }
         }
+    }
     
     
 }
