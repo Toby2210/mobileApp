@@ -70,6 +70,37 @@ class FirebaseManager {
         })
     }
     
+    // Loading medication records
+    func loadMedicationRecords(completion: @escaping ([MedicationRecord]) -> Void) {
+        guard let currentUserID = Auth.auth().currentUser?.uid else {
+            completion([])
+            return
+        }
+        
+        databaseRef.child("medicationPercentage").child(currentUserID).observeSingleEvent(of: .value, with:  { snapshot in
+            guard let medicationRecordsData = snapshot.value as? [[String: Any]] else {
+                completion([])
+                return
+            }
+            
+            let medicationRecords = medicationRecordsData.compactMap { data -> MedicationRecord? in
+                guard let date = data["date"] as? Date,
+                      let percentage = data["percentage"] as? Int else {
+                    return nil
+                }
+                
+                return MedicationRecord(date: date, percentage: percentage)
+            }
+            
+            completion(medicationRecords)
+        })
+    }
+    
+    
+    
+    
+    
+    
     func saveMedications(_ medications: [Medication]) {
         guard let currentUserID = Auth.auth().currentUser?.uid else {
             return
@@ -86,51 +117,36 @@ class FirebaseManager {
         
         databaseRef.child("medications").child(currentUserID).setValue(medicationsData)
     }
-    func loadMedicationRecords(completion: @escaping ([MedicationRecord]) -> Void) {
+    
+    
+    
+    
+    func saveMedicationPercentage(_ records: [MedicationRecord]) {
         guard let currentUserID = Auth.auth().currentUser?.uid else {
-            completion([])
             return
         }
         
-        databaseRef.child("medicationRecords").child(currentUserID).observeSingleEvent(of: .value) { snapshot in
-            guard let recordsData = snapshot.value as? [[String: Any]] else {
-                completion([])
-                return
-            }
-            
-            let records = recordsData.compactMap { data -> MedicationRecord? in
-                guard let medicationName = data["medicationName"] as? String,
-                      let dosage = data["dosage"] as? Int,
-                      let timestamp = data["timestamp"] as? TimeInterval else {
-                    return nil
-                }
-                
-                return MedicationRecord(medicationName: medicationName, dosage: dosage, timestamp: Date(timeIntervalSince1970: timestamp))
-            }
-            
-            completion(records)
-        }
-    }
-    func saveMedicationPercentage(percentage: Int, recordDate: Date) {
-        guard let currentUserID = Auth.auth().currentUser?.uid else {
-            return
-        }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        let dateString = dateFormatter.string(from: recordDate)
         
-        let percentageData: [String: Any] = [
-            "percentage": percentage,
-            "recordDate": recordDate.timeIntervalSince1970
-        ]
-        
-        let userRef = databaseRef.child("medicationPercentage").child(currentUserID).child(dateString)
-        userRef.setValue(percentageData) { error, _ in
-            if let error = error {
-                print("Error saving medication percentage to Firebase: \(error.localizedDescription)")
-            } else {
-                print("Medication percentage saved successfully to Firebase")
+        for record in records {
+            let dateString = dateFormatter.string(from: record.date)
+            
+            let percentageData: [String: Any] = [
+                "percentage": record.percentage,
+                "recordDate": record.date.timeIntervalSince1970
+            ]
+            
+            let userRef = databaseRef.child("medicationPercentage").child(currentUserID).child(dateString)
+            userRef.setValue(percentageData) { error, _ in
+                if let error = error {
+                    print("Error saving medication percentage to Firebase: \(error.localizedDescription)")
+                } else {
+                    print("Medication percentage saved successfully.")
+                }
             }
         }
     }
+    
+    
 }

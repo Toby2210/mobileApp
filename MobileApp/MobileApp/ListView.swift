@@ -15,9 +15,14 @@ struct Medication: Identifiable {
     var isTaken: Bool   //Is the drug is taken?
     var lastModifiedTime: Date
 }
-
+struct MedicationRecord : Identifiable{
+    let id = UUID()
+    let date: Date
+    let percentage: Int
+}
 struct ListView: View {
     @State private var medications: [Medication] = []   //List of the drugs
+    @State private var medicationRecord: [MedicationRecord] = []
     @State private var isEditing = false
     @State private var isAdding = false
     @State private var newMedicationName = ""
@@ -160,13 +165,22 @@ struct ListView: View {
                 }
 
                 self.medications = updatedMedications
+                FirebaseManager.shared.saveMedications(self.medications)
             }
         }
     }
     func calculateMedicationPercentage() {
         let takenCount = medications.filter { $0.isTaken }.count
         let percentage = Int((Double(takenCount) / Double(medications.count)) * 100)
-        FirebaseManager.shared.saveMedicationPercentage(percentage: percentage, recordDate: Date())
+        
+        let currentDate = Date()
+            let medicationRecord = MedicationRecord(date: currentDate, percentage: percentage)
+
+            var data = [MedicationRecord]()
+            data.append(medicationRecord)
+
+            FirebaseManager.shared.saveMedicationPercentage(data)
+    
     }
     
 }

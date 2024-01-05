@@ -6,11 +6,7 @@
 //
 
 import SwiftUI
-struct MedicationRecord {
-    let medicationName: String
-    let dosage: Int
-    let timestamp: Date
-}
+
 struct RecordView: View {
     @EnvironmentObject var dateHolder: DateHolder
     @State private var medicationRecords: [MedicationRecord] = []

@@ -44,14 +44,28 @@ struct CalendarCell: View {
     }
     
     var cellColor: Color {
-        if medicationPercentage >= 50 {
-            return .yellow
-        }else if medicationPercentage == 100 {
-            return .green
-        }else if medicationPercentage >= 0{
-            return .red
-        }else {
-            return .clear
+        let currentDate = monthStruct().day()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd" // Adjust the format based on your date string
+        print(currentDate)
+        if let medicationRecord = medicationRecords.first(where: { dateFormatter.string(from: $0.date) == currentDate }) {
+            let medicationPercentage = medicationRecord.percentage
+            print(medicationPercentage)
+            if medicationPercentage >= 50 {
+                return .yellow
+            } else if medicationPercentage == 100 {
+                return .green
+            } else if medicationPercentage >= 0 {
+                return .red
+            }
         }
+        
+        print("------------------------------------")
+        return .clear
     }
+    
+    
+    
+    
+    
 }
