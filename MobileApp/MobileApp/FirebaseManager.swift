@@ -48,13 +48,13 @@ class FirebaseManager {
             completion([])
             return
         }
-        
+        // get data from firebase
         databaseRef.child("medications").child(currentUserID).observeSingleEvent(of: .value, with: { snapshot in
             guard let medicationsData = snapshot.value as? [[String: Any]] else {
                 completion([])
                 return
             }
-            
+            // save the date to teh medicationsData forment
             let medications = medicationsData.compactMap { data -> Medication? in
                 guard let name = data["name"] as? String,
                       let takingTime = data["takingTime"] as? String,
@@ -71,31 +71,38 @@ class FirebaseManager {
     }
     
     // Loading medication records
-    func loadMedicationRecords(completion: @escaping ([MedicationRecord]) -> Void) {
+    func loadUserMedicationRecords(completion: @escaping ([MedicationRecord]) -> Void) {
         guard let currentUserID = Auth.auth().currentUser?.uid else {
             completion([])
             return
         }
         
-        databaseRef.child("medicationPercentage").child(currentUserID).observeSingleEvent(of: .value, with:  { snapshot in
-            guard let medicationRecordsData = snapshot.value as? [[String: Any]] else {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        // get data from firebase
+        databaseRef.child("medicationPercentage").child(currentUserID).observeSingleEvent(of: .value) { snapshot in
+            var medicationRecords: [MedicationRecord] = []
+            
+            guard let dateSnapshots = snapshot.value as? [String: Any] else {
                 completion([])
                 return
             }
-            
-            let medicationRecords = medicationRecordsData.compactMap { data -> MedicationRecord? in
-                guard let date = data["date"] as? Date,
-                      let percentage = data["percentage"] as? Int else {
-                    return nil
+            // save the date to teh MedicationRecord forment
+            for (_, recordData) in dateSnapshots {
+                guard let recordData = recordData as? [String: Any],
+                    let percentage = recordData["percentage"] as? Int,
+                    let recordDateTimestamp = recordData["recordDate"] as? TimeInterval else {
+                        continue
                 }
                 
-                return MedicationRecord(date: date, percentage: percentage)
+                let recordDate = Date(timeIntervalSince1970: recordDateTimestamp)
+                let medicationRecord = MedicationRecord(percentage: percentage, recordDate: recordDate)
+                medicationRecords.append(medicationRecord)
             }
             
             completion(medicationRecords)
-        })
+        }
     }
-    
     
     
     
@@ -130,11 +137,11 @@ class FirebaseManager {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
         for record in records {
-            let dateString = dateFormatter.string(from: record.date)
+            let dateString = dateFormatter.string(from: record.recordDate)
             
             let percentageData: [String: Any] = [
                 "percentage": record.percentage,
-                "recordDate": record.date.timeIntervalSince1970
+                "recordDate": record.recordDate.timeIntervalSince1970
             ]
             
             let userRef = databaseRef.child("medicationPercentage").child(currentUserID).child(dateString)

@@ -15,10 +15,12 @@ struct Medication: Identifiable {
     var isTaken: Bool   //Is the drug is taken?
     var lastModifiedTime: Date
 }
+
+// percentage of each day about taking drug
 struct MedicationRecord : Identifiable{
     let id = UUID()
-    let date: Date
     let percentage: Int
+    let recordDate: Date
 }
 struct ListView: View {
     @State private var medications: [Medication] = []   //List of the drugs
@@ -145,25 +147,26 @@ struct ListView: View {
         medications.move(fromOffsets: source, toOffset: destination)
         FirebaseManager.shared.saveMedications(medications)
     }
-    
+    // get the data from firebase
     func loadUserMedications() {
         FirebaseManager.shared.loadUserMedications { medications in
             DispatchQueue.main.async {
                 let calendar = Calendar.current
                 let today = calendar.startOfDay(for: Date())
-
+                
                 var updatedMedications = medications
-
+                // check the data is already pass a day or not,
+                // if the last modified time is before today, will change the isTaken to false
                 for index in 0..<updatedMedications.count {
                     let medication = updatedMedications[index]
                     let medicationDate = calendar.startOfDay(for: medication.lastModifiedTime)
-
+                    
                     if !calendar.isDate(medicationDate, inSameDayAs: today) {
                         updatedMedications[index].isTaken = false
                         updatedMedications[index].lastModifiedTime = today
                     }
                 }
-
+                // update the list and send back to firebase
                 self.medications = updatedMedications
                 FirebaseManager.shared.saveMedications(self.medications)
             }
@@ -174,13 +177,13 @@ struct ListView: View {
         let percentage = Int((Double(takenCount) / Double(medications.count)) * 100)
         
         let currentDate = Date()
-            let medicationRecord = MedicationRecord(date: currentDate, percentage: percentage)
-
-            var data = [MedicationRecord]()
-            data.append(medicationRecord)
-
-            FirebaseManager.shared.saveMedicationPercentage(data)
-    
+        let medicationRecord = MedicationRecord(percentage: percentage, recordDate: currentDate)
+        
+        var data = [MedicationRecord]()
+        data.append(medicationRecord)
+        
+        FirebaseManager.shared.saveMedicationPercentage(data)
+        
     }
     
 }

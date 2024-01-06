@@ -10,6 +10,8 @@ import SwiftUI
 struct RecordView: View {
     @EnvironmentObject var dateHolder: DateHolder
     @State private var medicationRecords: [MedicationRecord] = []
+    
+    // darw the calendar
     var body: some View
     {
         VStack(spacing: 1)
@@ -34,19 +36,12 @@ struct RecordView: View {
                 let startingSpaces = CalendarHelper().weekDay(firstDayOfMonth)
                 let prevMonth = CalendarHelper().minusMonth(dateHolder.date)
                 let daysInPrevMonth = CalendarHelper().daysInMonth(prevMonth)
-                ForEach(0..<6)
-                {
-                    row in
-                    HStack(spacing: 1)
-                    {
-                        ForEach(1..<8)
-                        {
-                            column in
+                ForEach(0..<6) { row in
+                    HStack(spacing: 1) {
+                        ForEach(1..<8) { column in
                             let count = column + (row * 7)
-                            CalendarCell(count: count, startingSpaces:startingSpaces, daysInMonth: daysInMonth, daysInPrevMonth: daysInPrevMonth, medicationRecords: medicationRecords)
+                            CalendarCell(count: count, startingSpaces: startingSpaces, daysInMonth: daysInMonth, daysInPrevMonth: daysInPrevMonth, medicationRecords: medicationRecords, selectedDate: dateHolder.date)
                                 .environmentObject(dateHolder)
-                            
-                            
                         }
                     }
                 }
@@ -54,20 +49,14 @@ struct RecordView: View {
             
         }
         .onAppear {
-            loadMedicationRecords()
-        }
-    }
-    
-    
-    
-    func loadMedicationRecords() {
-        FirebaseManager.shared.loadMedicationRecords { records in
-            DispatchQueue.main.async {
-                self.medicationRecords = records
+            // get the record date from firebase
+            FirebaseManager.shared.loadUserMedicationRecords { records in
+                DispatchQueue.main.async {
+                    self.medicationRecords = records
+                }
             }
         }
     }
-    
 }
 extension Text
 {
@@ -78,4 +67,5 @@ extension Text
             .lineLimit(1)
     }
 }
+
 

@@ -15,17 +15,34 @@ struct CalendarCell: View {
     let daysInPrevMonth: Int
     @State private var medicationPercentage: Int = -1
     let medicationRecords: [MedicationRecord]
+    let selectedDate: Date
     
-    
+    // draw the calendar
     var body: some View {
-        Text(monthStruct().day())
-            .foregroundColor(textColor(type: monthStruct().monthType))
-            .frame(maxWidth: .infinity, maxHeight: 70)
-            .background(cellColor)
+        Group {
+            if monthStruct().monthType == .Current {
+                Text(monthStruct().day())
+                    .foregroundColor(textColor(type: monthStruct().monthType))
+                    .frame(maxWidth: .infinity, maxHeight: 70)
+                    .background(cellColor())
+            } else {
+                Text("")
+                    .frame(maxWidth: .infinity, maxHeight: 70)
+                    .background(Color.clear)
+            }
+        }
     }
     
     func textColor(type: MonthType) -> Color {
-        return type == MonthType.Current ? Color.black : Color.gray
+        if type == MonthType.Current {
+            if UITraitCollection.current.userInterfaceStyle == .dark {
+                return Color.white
+            } else {
+                return Color.black
+            }
+        } else {
+            return Color.gray
+        }
     }
     
     func monthStruct() -> MonthStruct {
@@ -43,29 +60,36 @@ struct CalendarCell: View {
         return MonthStruct(monthType: MonthType.Current, dayInt: day)
     }
     
-    var cellColor: Color {
-        let currentDate = monthStruct().day()
+    // Get the record and set different color to the calendar
+    func cellColor() -> Color {
+        let currentDate = monthStruct()
+        let selectedYearMonth = CalendarHelper().monthYearString(selectedDate)
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd" // Adjust the format based on your date string
-        print(currentDate)
-        if let medicationRecord = medicationRecords.first(where: { dateFormatter.string(from: $0.date) == currentDate }) {
-            let medicationPercentage = medicationRecord.percentage
-            print(medicationPercentage)
-            if medicationPercentage >= 50 {
-                return .yellow
-            } else if medicationPercentage == 100 {
-                return .green
-            } else if medicationPercentage >= 0 {
-                return .red
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        for medicationRecord in medicationRecords {
+            let recordDate = dateFormatter.string(from: medicationRecord.recordDate)
+            
+            guard let date = dateFormatter.date(from: recordDate) else {
+                continue
+            }
+            
+            let recordYearMonth = CalendarHelper().monthYearString(date)
+            if recordYearMonth == selectedYearMonth {
+                let medicationDay = CalendarHelper().dayOfMonth(date)
+                if medicationDay == currentDate.dayInt {
+                    let medicationPercentage = medicationRecord.percentage
+                    if medicationPercentage == 100 {
+                        return .green
+                    } else if medicationPercentage >= 50 {
+                        return .yellow
+                    } else {
+                        return .red
+                    }
+                }
             }
         }
         
-        print("------------------------------------")
         return .clear
     }
-    
-    
-    
-    
-    
 }
