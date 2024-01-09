@@ -30,13 +30,16 @@ struct ListView: View {
     @State private var newMedicationName = ""
     @State private var newMedicationTakingTime = "00:00"
     
+    // creat "00:00" until "23:30" option
     let timeIntervals = stride(from: 0, to: 24 * 60, by: 30).map { minutes -> String in
         let hour = minutes / 60
         let minute = minutes % 60
         return String(format: "%02d:%02d", hour, minute)
     }
+    
     var body: some View {
         NavigationView {
+            //List of drugs
             VStack {
                 List {
                     ForEach(medications) { medication in
@@ -66,6 +69,7 @@ struct ListView: View {
                             }
                     }
                 }
+                //place for adding new drug to drugs list
                 HStack {
                     TextField("Name", text: $newMedicationName)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -119,6 +123,7 @@ struct ListView: View {
         .navigationTitle("Add Medication")
     }
     
+    // adding new drug to drugs list
     func addNewMedication() {
         medications.append(Medication(name: newMedicationName, takingTime: newMedicationTakingTime, isTaken: false, lastModifiedTime: Date()))
         FirebaseManager.shared.saveMedications(medications)
@@ -128,12 +133,14 @@ struct ListView: View {
         newMedicationTakingTime = ""
     }
     
+    // delete a record from the list
     func delete(at offsets: IndexSet) {
         medications.remove(atOffsets: offsets)
         FirebaseManager.shared.saveMedications(medications)
         calculateMedicationPercentage()
     }
     
+    // toggle the status of the drug
     func toggleIsTaken(for medication: Medication) {
         if let index = medications.firstIndex(where: { $0.id == medication.id }) {
             medications[index].isTaken.toggle()
@@ -143,6 +150,7 @@ struct ListView: View {
         calculateMedicationPercentage()
     }
     
+    // move the position of the drug from the list
     func move(from source: IndexSet, to destination: Int) {
         medications.move(fromOffsets: source, toOffset: destination)
         FirebaseManager.shared.saveMedications(medications)
@@ -172,7 +180,11 @@ struct ListView: View {
             }
         }
     }
+    
+    // calculate the percentage of today, and send it back to firebase database
     func calculateMedicationPercentage() {
+        
+        //calculate
         let takenCount = medications.filter { $0.isTaken }.count
         let percentage = Int((Double(takenCount) / Double(medications.count)) * 100)
         
@@ -182,6 +194,7 @@ struct ListView: View {
         var data = [MedicationRecord]()
         data.append(medicationRecord)
         
+        //send to firebase
         FirebaseManager.shared.saveMedicationPercentage(data)
         
     }

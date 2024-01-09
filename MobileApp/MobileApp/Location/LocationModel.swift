@@ -27,14 +27,29 @@ class LocationModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-
-        locationManager.requestWhenInUseAuthorization()
+        
+        if authorizationStatus == .notDetermined {
+            DispatchQueue.main.async {
+                self.locationManager.requestWhenInUseAuthorization()
+            }
+        }
         
         locationManager.startUpdatingLocation()
     }
+    
+    // print the location data
+    func printCurrentLocation() {
+        if let location = locationManager.location {
+            print("Current Location: \(location.coordinate.latitude), \(location.coordinate.longitude)")
+        } else {
+            print("Current Location is not available")
+        }
+    }
+    
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         authorizationStatus = manager.authorizationStatus
     }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         DispatchQueue.main.async {
             self.lastLocation = locations.last

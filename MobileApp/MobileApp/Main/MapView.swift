@@ -15,6 +15,7 @@ struct MapView: UIViewRepresentable {
     @State var coordinateRegion: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0, longitude: 0),
                                                                           span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5))
 
+    // pont user location and pin the hospital location
     func makeUIView(context: Context) -> MKMapView {
         mapView.delegate = context.coordinator
         mapView.showsUserLocation = true
@@ -30,6 +31,8 @@ struct MapView: UIViewRepresentable {
     }
     
     func updateUIView(_ mapView: MKMapView, context: Context) {
+        // print the location data when the map is updated
+        locationManager.printCurrentLocation()
         mapView.removeAnnotations(mapView.annotations)
         for hospital in hospitals {
             let annotation = MKPointAnnotation()
@@ -40,7 +43,7 @@ struct MapView: UIViewRepresentable {
     }
     
     func makeCoordinator() -> Coordinator {
-        Coordinator(self)
+        return Coordinator(self)
     }
     
     class Coordinator: NSObject, MKMapViewDelegate {
@@ -51,6 +54,7 @@ struct MapView: UIViewRepresentable {
         }
         
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            // return user location
             if annotation is MKUserLocation {
                 return nil
             }
@@ -63,6 +67,7 @@ struct MapView: UIViewRepresentable {
         }
         
         func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+            // draw the hospital placemark
             if let coordinate = view.annotation?.coordinate {
                 let placemark = MKPlacemark(coordinate: coordinate)
                 let mapItem = MKMapItem(placemark: placemark)

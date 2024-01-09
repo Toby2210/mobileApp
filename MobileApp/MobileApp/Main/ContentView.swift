@@ -27,9 +27,10 @@ struct Hospital {
 
 struct ContentView: View {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @State private var isLoggedIn = false
-    @StateObject var locationModel = LocationModel()
+    @State private var isLoggedIn = false   //login or not
     @StateObject private var locationManager = LocationModel()
+    
+    // hospitals list
     let hospitals = [
         Hospital(name: "Tuen Mun Hospital", coordinate: CLLocationCoordinate2D(latitude: 22.40768, longitude: 113.97600)),
         Hospital(name: "Queen Elizabeth Hospital", coordinate: CLLocationCoordinate2D(latitude: 22.30944, longitude: 114.17556))
@@ -81,11 +82,4 @@ struct ContentView: View {
             isLoggedIn = false
         }
     }
-}
-
-
-
-#Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
 }

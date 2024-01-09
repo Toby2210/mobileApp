@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import FirebaseAuth
-import FirebaseDatabase
+import FirebaseAuth //For login system
+import FirebaseDatabase //For data saving
 
 class FirebaseManager {
     static let shared = FirebaseManager()
@@ -107,7 +107,7 @@ class FirebaseManager {
     
     
     
-    
+    // send the list data to firebase
     func saveMedications(_ medications: [Medication]) {
         guard let currentUserID = Auth.auth().currentUser?.uid else {
             return
@@ -127,7 +127,7 @@ class FirebaseManager {
     
     
     
-    
+    // send the record data to firebase
     func saveMedicationPercentage(_ records: [MedicationRecord]) {
         guard let currentUserID = Auth.auth().currentUser?.uid else {
             return

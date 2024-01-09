@@ -10,6 +10,7 @@ import SwiftData
 import Firebase
 @main
 struct MobileAppApp: App {
+    // initialize Firebase
     init() {
             FirebaseApp.configure() 
         }
