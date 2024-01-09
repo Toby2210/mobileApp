@@ -33,6 +33,9 @@
 		59D315762B46965B0051C3BA /* MonthStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D315752B46965B0051C3BA /* MonthStruct.swift */; };
 		59D315772B46965B0051C3BA /* MonthStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D315752B46965B0051C3BA /* MonthStruct.swift */; };
 		59D315782B46965B0051C3BA /* MonthStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D315752B46965B0051C3BA /* MonthStruct.swift */; };
+		59D3157B2B4D16F80051C3BA /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D3157A2B4D16F80051C3BA /* LocationModel.swift */; };
+		59D3157C2B4D16F80051C3BA /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D3157A2B4D16F80051C3BA /* LocationModel.swift */; };
+		59D3157D2B4D16F80051C3BA /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D3157A2B4D16F80051C3BA /* LocationModel.swift */; };
 		59FC6AE92B40010B00A7D9A7 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FC6AE82B40010B00A7D9A7 /* ListView.swift */; };
 		59FC6AEB2B40011A00A7D9A7 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FC6AEA2B40011A00A7D9A7 /* RecordView.swift */; };
 		59FC6AED2B40012300A7D9A7 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FC6AEC2B40012300A7D9A7 /* MapView.swift */; };
@@ -87,6 +90,7 @@
 		59D3156D2B4696320051C3BA /* DateHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHolder.swift; sourceTree = "<group>"; };
 		59D315712B4696470051C3BA /* DateScrollerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateScrollerView.swift; sourceTree = "<group>"; };
 		59D315752B46965B0051C3BA /* MonthStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthStruct.swift; sourceTree = "<group>"; };
+		59D3157A2B4D16F80051C3BA /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		59FC6AE82B40010B00A7D9A7 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		59FC6AEA2B40011A00A7D9A7 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		59FC6AEC2B40012300A7D9A7 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -164,6 +168,7 @@
 				59FC6AEC2B40012300A7D9A7 /* MapView.swift */,
 				59FC6AEA2B40011A00A7D9A7 /* RecordView.swift */,
 				59FC6AE82B40010B00A7D9A7 /* ListView.swift */,
+				59D3157A2B4D16F80051C3BA /* LocationModel.swift */,
 				598BFACF2B45343E00F60FC8 /* FirebaseManager.swift */,
 				59FC6AF02B40013400A7D9A7 /* SettingView.swift */,
 				59FC6AFD2B40075A00A7D9A7 /* LoginView.swift */,
@@ -352,6 +357,7 @@
 				59FC6AE92B40010B00A7D9A7 /* ListView.swift in Sources */,
 				59D315722B4696470051C3BA /* DateScrollerView.swift in Sources */,
 				59D3156A2B4695FA0051C3BA /* CalendarHelper.swift in Sources */,
+				59D3157B2B4D16F80051C3BA /* LocationModel.swift in Sources */,
 				59FC6AED2B40012300A7D9A7 /* MapView.swift in Sources */,
 				598BFAD02B45343E00F60FC8 /* FirebaseManager.swift in Sources */,
 				599C2E7B2B3167800046BEF7 /* ContentView.swift in Sources */,
@@ -372,6 +378,7 @@
 			files = (
 				59D315732B4696470051C3BA /* DateScrollerView.swift in Sources */,
 				59D3156F2B4696320051C3BA /* DateHolder.swift in Sources */,
+				59D3157C2B4D16F80051C3BA /* LocationModel.swift in Sources */,
 				598BFAD52B45348900F60FC8 /* FirebaseManager.swift in Sources */,
 				59D3156B2B4695FA0051C3BA /* CalendarHelper.swift in Sources */,
 				59FC6AFF2B40075A00A7D9A7 /* LoginView.swift in Sources */,
@@ -389,6 +396,7 @@
 				599C2E982B3167820046BEF7 /* MobileAppUITestsLaunchTests.swift in Sources */,
 				59D315682B4695E40051C3BA /* CalendarCell.swift in Sources */,
 				59FC6AFC2B40063C00A7D9A7 /* Item.swift in Sources */,
+				59D3157D2B4D16F80051C3BA /* LocationModel.swift in Sources */,
 				59D315782B46965B0051C3BA /* MonthStruct.swift in Sources */,
 				598BFAD42B45348900F60FC8 /* FirebaseManager.swift in Sources */,
 				59FC6B002B40075A00A7D9A7 /* LoginView.swift in Sources */,
@@ -542,8 +550,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MobileApp/Preview Content\"";
+				DEVELOPMENT_TEAM = 62NB949FAC;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "The map function need to ues GPS system";
+				INFOPLIST_KEY_NSLocationUsageDescription = "The map function need to ues GPS system";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The map function need to ues GPS system";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -570,8 +582,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MobileApp/Preview Content\"";
+				DEVELOPMENT_TEAM = 62NB949FAC;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "The map function need to ues GPS system";
+				INFOPLIST_KEY_NSLocationUsageDescription = "The map function need to ues GPS system";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The map function need to ues GPS system";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
