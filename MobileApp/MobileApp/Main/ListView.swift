@@ -62,11 +62,6 @@ struct ListView: View {
                     if isEditing {
                         EditButton()
                             .padding()
-                            .onTapGesture {
-                                withAnimation {
-                                    isAdding = true
-                                }
-                            }
                     }
                 }
                 //place for adding new drug to drugs list
@@ -98,29 +93,12 @@ struct ListView: View {
                 }
                 .navigationTitle("Medication List")
                 .navigationBarItems(trailing: EditButton())
-                .sheet(isPresented: $isAdding) {
-                    addMedicationSheet
-                }
                 .onAppear {
                     loadUserMedications()
                 }
                 
             }
         }
-    }
-    var addMedicationSheet: some View {
-        VStack {
-            Form {
-                TextField("Medication Name", text: $newMedicationName)
-                TextField("Taking Time", text: $newMedicationTakingTime)
-            }
-            Button(action: {
-                addNewMedication()
-            }) {
-                Text("Add")
-            }
-        }
-        .navigationTitle("Add Medication")
     }
     
     // adding new drug to drugs list
@@ -130,7 +108,7 @@ struct ListView: View {
         calculateMedicationPercentage()
         isAdding = false
         newMedicationName = ""
-        newMedicationTakingTime = ""
+        newMedicationTakingTime = "00:00"
     }
     
     // delete a record from the list
@@ -174,9 +152,11 @@ struct ListView: View {
                         updatedMedications[index].lastModifiedTime = today
                     }
                 }
-                // update the list and send back to firebase
+                // update the list of the app
                 self.medications = updatedMedications
+                // update the list and send back to firebase
                 FirebaseManager.shared.saveMedications(self.medications)
+                calculateMedicationPercentage()
             }
         }
     }

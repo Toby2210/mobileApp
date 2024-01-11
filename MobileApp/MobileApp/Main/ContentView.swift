@@ -56,7 +56,7 @@ struct ContentView: View {
                         Image(systemName: "map")
                         Text("Map")
                     }
-                AIView()
+                AIView(classifier: ImageClassifier())
                     .tabItem {
                         Image(systemName: "eye")
                         Text("AI")

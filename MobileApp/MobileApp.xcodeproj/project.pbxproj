@@ -18,6 +18,18 @@
 		599C2E8C2B3167820046BEF7 /* MobileAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599C2E8B2B3167820046BEF7 /* MobileAppTests.swift */; };
 		599C2E962B3167820046BEF7 /* MobileAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599C2E952B3167820046BEF7 /* MobileAppUITests.swift */; };
 		599C2E982B3167820046BEF7 /* MobileAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 599C2E972B3167820046BEF7 /* MobileAppUITestsLaunchTests.swift */; };
+		59A1E4692B4FB6BD00B1FC37 /* Classifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A1E4662B4FB6BD00B1FC37 /* Classifier.swift */; };
+		59A1E46A2B4FB6BD00B1FC37 /* Classifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A1E4662B4FB6BD00B1FC37 /* Classifier.swift */; };
+		59A1E46B2B4FB6BD00B1FC37 /* Classifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A1E4662B4FB6BD00B1FC37 /* Classifier.swift */; };
+		59A1E46C2B4FB6BD00B1FC37 /* ImageClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A1E4672B4FB6BD00B1FC37 /* ImageClassifier.swift */; };
+		59A1E46D2B4FB6BD00B1FC37 /* ImageClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A1E4672B4FB6BD00B1FC37 /* ImageClassifier.swift */; };
+		59A1E46E2B4FB6BD00B1FC37 /* ImageClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A1E4672B4FB6BD00B1FC37 /* ImageClassifier.swift */; };
+		59A1E46F2B4FB6BD00B1FC37 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A1E4682B4FB6BD00B1FC37 /* ImagePicker.swift */; };
+		59A1E4702B4FB6BD00B1FC37 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A1E4682B4FB6BD00B1FC37 /* ImagePicker.swift */; };
+		59A1E4712B4FB6BD00B1FC37 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A1E4682B4FB6BD00B1FC37 /* ImagePicker.swift */; };
+		59A1E4732B4FB6F200B1FC37 /* MobileNetV2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 59A1E4722B4FB6F200B1FC37 /* MobileNetV2.mlmodel */; };
+		59A1E4742B4FB6F200B1FC37 /* MobileNetV2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 59A1E4722B4FB6F200B1FC37 /* MobileNetV2.mlmodel */; };
+		59A1E4752B4FB6F200B1FC37 /* MobileNetV2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 59A1E4722B4FB6F200B1FC37 /* MobileNetV2.mlmodel */; };
 		59D315662B4695E40051C3BA /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D315652B4695E40051C3BA /* CalendarCell.swift */; };
 		59D315672B4695E40051C3BA /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D315652B4695E40051C3BA /* CalendarCell.swift */; };
 		59D315682B4695E40051C3BA /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D315652B4695E40051C3BA /* CalendarCell.swift */; };
@@ -85,6 +97,10 @@
 		599C2E912B3167820046BEF7 /* MobileAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MobileAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		599C2E952B3167820046BEF7 /* MobileAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileAppUITests.swift; sourceTree = "<group>"; };
 		599C2E972B3167820046BEF7 /* MobileAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		59A1E4662B4FB6BD00B1FC37 /* Classifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Classifier.swift; sourceTree = "<group>"; };
+		59A1E4672B4FB6BD00B1FC37 /* ImageClassifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageClassifier.swift; sourceTree = "<group>"; };
+		59A1E4682B4FB6BD00B1FC37 /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		59A1E4722B4FB6F200B1FC37 /* MobileNetV2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = MobileNetV2.mlmodel; sourceTree = "<group>"; };
 		59D315652B4695E40051C3BA /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		59D315692B4695FA0051C3BA /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
 		59D3156D2B4696320051C3BA /* DateHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHolder.swift; sourceTree = "<group>"; };
@@ -166,6 +182,7 @@
 				59D315812B4D3AEA0051C3BA /* Location */,
 				59D315802B4D3ADD0051C3BA /* Firebase */,
 				59D3157F2B4D3AC60051C3BA /* Calendar */,
+				59A1E4652B4FB69400B1FC37 /* AI */,
 				59D3157E2B4D3A850051C3BA /* Main */,
 				59FC6AF22B40045000A7D9A7 /* GoogleService-Info.plist */,
 				599C2E7E2B3167820046BEF7 /* Assets.xcassets */,
@@ -197,6 +214,17 @@
 				599C2E972B3167820046BEF7 /* MobileAppUITestsLaunchTests.swift */,
 			);
 			path = MobileAppUITests;
+			sourceTree = "<group>";
+		};
+		59A1E4652B4FB69400B1FC37 /* AI */ = {
+			isa = PBXGroup;
+			children = (
+				59A1E4722B4FB6F200B1FC37 /* MobileNetV2.mlmodel */,
+				59A1E4662B4FB6BD00B1FC37 /* Classifier.swift */,
+				59A1E4672B4FB6BD00B1FC37 /* ImageClassifier.swift */,
+				59A1E4682B4FB6BD00B1FC37 /* ImagePicker.swift */,
+			);
+			path = AI;
 			sourceTree = "<group>";
 		};
 		59D3157E2B4D3A850051C3BA /* Main */ = {
@@ -385,21 +413,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59A1E4692B4FB6BD00B1FC37 /* Classifier.swift in Sources */,
 				59D3156E2B4696320051C3BA /* DateHolder.swift in Sources */,
 				59FC6AE92B40010B00A7D9A7 /* ListView.swift in Sources */,
 				59D315722B4696470051C3BA /* DateScrollerView.swift in Sources */,
 				59D3156A2B4695FA0051C3BA /* CalendarHelper.swift in Sources */,
 				59D315832B4D3BEF0051C3BA /* Item.swift in Sources */,
 				59D3157B2B4D16F80051C3BA /* LocationModel.swift in Sources */,
+				59A1E46F2B4FB6BD00B1FC37 /* ImagePicker.swift in Sources */,
 				59FC6AED2B40012300A7D9A7 /* MapView.swift in Sources */,
 				598BFAD02B45343E00F60FC8 /* FirebaseManager.swift in Sources */,
 				599C2E7B2B3167800046BEF7 /* ContentView.swift in Sources */,
+				59A1E46C2B4FB6BD00B1FC37 /* ImageClassifier.swift in Sources */,
 				59FC6AFE2B40075A00A7D9A7 /* LoginView.swift in Sources */,
 				59D315762B46965B0051C3BA /* MonthStruct.swift in Sources */,
 				59FC6AEF2B40012B00A7D9A7 /* AIView.swift in Sources */,
 				59D315662B4695E40051C3BA /* CalendarCell.swift in Sources */,
 				59FC6AF12B40013400A7D9A7 /* SettingView.swift in Sources */,
 				59FC6AEB2B40011A00A7D9A7 /* RecordView.swift in Sources */,
+				59A1E4732B4FB6F200B1FC37 /* MobileNetV2.mlmodel in Sources */,
 				599C2E792B3167800046BEF7 /* MobileAppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -408,13 +440,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59A1E4742B4FB6F200B1FC37 /* MobileNetV2.mlmodel in Sources */,
+				59A1E4702B4FB6BD00B1FC37 /* ImagePicker.swift in Sources */,
 				59D315842B4D3BEF0051C3BA /* Item.swift in Sources */,
 				59D315732B4696470051C3BA /* DateScrollerView.swift in Sources */,
 				59D3156F2B4696320051C3BA /* DateHolder.swift in Sources */,
 				59D3157C2B4D16F80051C3BA /* LocationModel.swift in Sources */,
+				59A1E46D2B4FB6BD00B1FC37 /* ImageClassifier.swift in Sources */,
 				598BFAD52B45348900F60FC8 /* FirebaseManager.swift in Sources */,
 				59D3156B2B4695FA0051C3BA /* CalendarHelper.swift in Sources */,
 				59FC6AFF2B40075A00A7D9A7 /* LoginView.swift in Sources */,
+				59A1E46A2B4FB6BD00B1FC37 /* Classifier.swift in Sources */,
 				59D315772B46965B0051C3BA /* MonthStruct.swift in Sources */,
 				599C2E8C2B3167820046BEF7 /* MobileAppTests.swift in Sources */,
 				59D315672B4695E40051C3BA /* CalendarCell.swift in Sources */,
@@ -428,8 +464,12 @@
 				599C2E982B3167820046BEF7 /* MobileAppUITestsLaunchTests.swift in Sources */,
 				59D315682B4695E40051C3BA /* CalendarCell.swift in Sources */,
 				59D3157D2B4D16F80051C3BA /* LocationModel.swift in Sources */,
+				59A1E4752B4FB6F200B1FC37 /* MobileNetV2.mlmodel in Sources */,
+				59A1E4712B4FB6BD00B1FC37 /* ImagePicker.swift in Sources */,
 				59D315782B46965B0051C3BA /* MonthStruct.swift in Sources */,
+				59A1E46B2B4FB6BD00B1FC37 /* Classifier.swift in Sources */,
 				598BFAD42B45348900F60FC8 /* FirebaseManager.swift in Sources */,
+				59A1E46E2B4FB6BD00B1FC37 /* ImageClassifier.swift in Sources */,
 				59FC6B002B40075A00A7D9A7 /* LoginView.swift in Sources */,
 				59D315852B4D3BEF0051C3BA /* Item.swift in Sources */,
 				599C2E962B3167820046BEF7 /* MobileAppUITests.swift in Sources */,
@@ -585,6 +625,7 @@
 				DEVELOPMENT_TEAM = 62NB949FAC;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "The AI function need to use Camera";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "The map function need to ues GPS system";
 				INFOPLIST_KEY_NSLocationUsageDescription = "The map function need to ues GPS system";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The map function need to ues GPS system";
@@ -617,6 +658,7 @@
 				DEVELOPMENT_TEAM = 62NB949FAC;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "The AI function need to use Camera";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "The map function need to ues GPS system";
 				INFOPLIST_KEY_NSLocationUsageDescription = "The map function need to ues GPS system";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "The map function need to ues GPS system";
