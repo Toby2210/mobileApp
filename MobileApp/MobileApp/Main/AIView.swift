@@ -12,6 +12,8 @@ struct AIView: View {
     @State var uiImage: UIImage?
     @State var sourceType: UIImagePickerController.SourceType = .photoLibrary
     @ObservedObject var classifier: ImageClassifier
+    @State var newDrugName: String = ""
+    @State var isAdding: Bool = false
     var body: some View {
         VStack{
             HStack{
@@ -67,6 +69,20 @@ struct AIView: View {
                 }
                 .font(.subheadline)
                 .padding()
+                Button(action: {
+                    if classifier.imageClass != nil{
+                        if uiImage != nil {
+                            classifier.detect(uiImage: uiImage!)
+                        }
+                        isAdding = true
+                        self.newDrugName = classifier.imageClass ?? ""
+                    }
+                }, label: {
+                    Text("Add to drugs list")
+                })
+                .sheet(isPresented: $isAdding) {
+                    AiAddingView(newMedicationName: newDrugName, isAdding: $isAdding)
+                    }
             }
         }
         .sheet(isPresented: $isPresenting){
@@ -79,4 +95,9 @@ struct AIView: View {
         }
         .padding()
     }
+    
+    func addToListView() {
+        isAdding = true
+    }
+    
 }

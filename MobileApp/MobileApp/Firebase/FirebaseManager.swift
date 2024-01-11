@@ -19,7 +19,7 @@ class FirebaseManager {
     // Register
     func register(email: String, password: String, confirmPassword: String, completion: @escaping (Result<User, Error>) -> Void) {
         if password != confirmPassword {
-            completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "密碼和確認密碼不匹配"])))
+            completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Password and confirm password are not same"])))
         } else {
             Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
                 if let error = error {

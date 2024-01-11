@@ -24,7 +24,7 @@ struct LoginView: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                 
-                SecureField("Password", text: $password)
+                SecureField("Password(over 6 digit)", text: $password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                 
