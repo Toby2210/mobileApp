@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct CalendarCell: View {
+    @EnvironmentObject var listManager: ListManager
     @EnvironmentObject var dateHolder: DateHolder
     let count: Int
     let startingSpaces: Int
     let daysInMonth: Int
     let daysInPrevMonth: Int
     @State private var medicationPercentage: Int = -1
-    let medicationRecords: [MedicationRecord]
     let selectedDate: Date
     
     // draw the calendar
@@ -66,8 +66,7 @@ struct CalendarCell: View {
         let selectedYearMonth = CalendarHelper().monthYearString(selectedDate)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        for medicationRecord in medicationRecords {
+        for medicationRecord in listManager.medicationRecords {
             let recordDate = dateFormatter.string(from: medicationRecord.recordDate)
             
             guard let date = dateFormatter.date(from: recordDate) else {

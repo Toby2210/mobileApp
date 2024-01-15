@@ -73,6 +73,12 @@ class FirebaseManager {
     // Loading medication records
     func loadUserMedicationRecords(completion: @escaping ([MedicationRecord]) -> Void) {
         guard let currentUserID = Auth.auth().currentUser?.uid else {
+            if let appData = UserDefaults.loadAppData() {
+                let medications = appData.medications
+                let medicationRecords = appData.medicationRecords
+                let appData = AppData(medications: medications, medicationRecords: medicationRecords)
+                UserDefaults.saveAppData(appData)
+            }
             completion([])
             return
         }
@@ -90,9 +96,9 @@ class FirebaseManager {
             // save the date to teh MedicationRecord forment
             for (_, recordData) in dateSnapshots {
                 guard let recordData = recordData as? [String: Any],
-                    let percentage = recordData["percentage"] as? Int,
-                    let recordDateTimestamp = recordData["recordDate"] as? TimeInterval else {
-                        continue
+                      let percentage = recordData["percentage"] as? Int,
+                      let recordDateTimestamp = recordData["recordDate"] as? TimeInterval else {
+                    continue
                 }
                 
                 let recordDate = Date(timeIntervalSince1970: recordDateTimestamp)
@@ -100,6 +106,11 @@ class FirebaseManager {
                 medicationRecords.append(medicationRecord)
             }
             
+            if let appData = UserDefaults.loadAppData() {
+                let medications = appData.medications
+                let appData = AppData(medications: medications, medicationRecords: medicationRecords)
+                UserDefaults.saveAppData(appData)
+            }
             completion(medicationRecords)
         }
     }
@@ -136,15 +147,22 @@ class FirebaseManager {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
+        let today = Date()
+        let todayString = dateFormatter.string(from: today)
+        
         for record in records {
-            let dateString = dateFormatter.string(from: record.recordDate)
+            let recordDate = record.recordDate
+            
+            if !Calendar.current.isDate(recordDate, inSameDayAs: today) {
+                continue // Skip records that are not for today
+            }
             
             let percentageData: [String: Any] = [
                 "percentage": record.percentage,
                 "recordDate": record.recordDate.timeIntervalSince1970
             ]
             
-            let userRef = databaseRef.child("medicationPercentage").child(currentUserID).child(dateString)
+            let userRef = databaseRef.child("medicationPercentage").child(currentUserID).child(todayString)
             userRef.setValue(percentageData) { error, _ in
                 if let error = error {
                     print("Error saving medication percentage to Firebase: \(error.localizedDescription)")
@@ -154,6 +172,31 @@ class FirebaseManager {
             }
         }
     }
-    
-    
+//    func saveMedicationPercentage(_ records: [MedicationRecord]) {
+//        guard let currentUserID = Auth.auth().currentUser?.uid else {
+//            return
+//        }
+//        
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "yyyy-MM-dd"
+//        
+//        for record in records {
+//            let dateString = dateFormatter.string(from: record.recordDate)
+//            
+//            let percentageData: [String: Any] = [
+//                "percentage": record.percentage,
+//                "recordDate": record.recordDate.timeIntervalSince1970
+//            ]
+//            
+//            let userRef = databaseRef.child("medicationPercentage").child(currentUserID).child(dateString)
+//            userRef.setValue(percentageData) { error, _ in
+//                if let error = error {
+//                    print("Error saving medication percentage to Firebase: \(error.localizedDescription)")
+//                } else {
+//                    print("Medication percentage saved successfully.")
+//                }
+//            }
+//        }
+//        
+//    }
 }

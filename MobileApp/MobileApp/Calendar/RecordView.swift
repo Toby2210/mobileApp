@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct RecordView: View {
+    @EnvironmentObject var listManager: ListManager
     @EnvironmentObject var dateHolder: DateHolder
-    @State private var medicationRecords: [MedicationRecord] = []
     // darw the calendar
     var body: some View
     {
@@ -39,7 +39,7 @@ struct RecordView: View {
                     HStack(spacing: 1) {
                         ForEach(1..<8) { column in
                             let count = column + (row * 7)
-                            CalendarCell(count: count, startingSpaces: startingSpaces, daysInMonth: daysInMonth, daysInPrevMonth: daysInPrevMonth, medicationRecords: medicationRecords, selectedDate: dateHolder.date)
+                            CalendarCell(count: count, startingSpaces: startingSpaces, daysInMonth: daysInMonth, daysInPrevMonth: daysInPrevMonth, selectedDate: dateHolder.date)
                                 .environmentObject(dateHolder)
                         }
                     }
@@ -48,18 +48,8 @@ struct RecordView: View {
             
         }
         .onAppear {
-            if let appData = UserDefaults.loadAppData() {
-                self.medicationRecords = appData.medicationRecords
-            }
-            print("Data is loaded from local - RecordView")
-
-            // get the record date from firebase
-            FirebaseManager.shared.loadUserMedicationRecords { records in
-                DispatchQueue.main.async {
-                    self.medicationRecords = records
-                }
-            }
-            print("Data is loaded from Firebase - RecordView")
+            listManager.loadData()
+            listManager.loadMedicationRecords()
         }
     }
 }

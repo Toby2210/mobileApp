@@ -44,6 +44,7 @@ struct ContentView: View {
                         Image(systemName: "calendar")
                         Text("Record")
                     }
+                    .environmentObject(listManager)
                 
                 MapView()
                     .tabItem {

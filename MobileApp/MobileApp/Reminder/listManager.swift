@@ -24,7 +24,7 @@ struct MedicationRecord : Identifiable, Codable {
 
 class ListManager: ObservableObject {
     @Published var medications: [Medication] = []   //List of drugs
-    @Published var medicationRecord: [MedicationRecord] = []
+    @Published var medicationRecords: [MedicationRecord] = []
     @Published var isEditing = false
     @Published var isAdding = false
     @Published var newMedicationName = ""
@@ -91,23 +91,47 @@ class ListManager: ObservableObject {
     
     // calculate the percentage of today and send it back to the firebase database
     func calculateMedicationPercentage() {
-        // Calculate
+        let currentDate = Date()
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: currentDate)
+        
         let takenCount = medications.filter { $0.isTaken }.count
         if medications.count != 0 {
             let percentage = Int((Double(takenCount) / Double(medications.count)) * 100)
             
-            let currentDate = Date()
-            let medicationRecord = MedicationRecord(percentage: percentage, recordDate: currentDate)
+            // Create new MedicationRecord locally for today
+            let medicationRecord = MedicationRecord(percentage: percentage, recordDate: today)
             
-            var data = [MedicationRecord]()
-            data.append(medicationRecord)
+            // Update medicationRecords locally for today
+            if let todayRecordIndex = medicationRecords.firstIndex(where: { calendar.isDate($0.recordDate, inSameDayAs: today) }) {
+                medicationRecords[todayRecordIndex] = medicationRecord
+            } else {
+                medicationRecords.append(medicationRecord)
+            }
             
-            // Send to firebase
-            FirebaseManager.shared.saveMedicationPercentage(data)
             saveData()
-            print("Percentage is calculated")
+            print("Percentage is calculated and medicationRecords is updated locally")
+            
+            // Send today's record to Firebase
+            FirebaseManager.shared.saveMedicationPercentage([medicationRecord])
         }
     }
+//    func calculateMedicationPercentage() {
+//        // Calculate
+//        let takenCount = medications.filter { $0.isTaken }.count
+//        if medications.count != 0 {
+//            let percentage = Int((Double(takenCount) / Double(medications.count)) * 100)
+//            
+//            let currentDate = Date()
+//            let medicationRecord = MedicationRecord(percentage: percentage, recordDate: currentDate)
+//            var data = [MedicationRecord]()
+//            data.append(medicationRecord)
+//            // Send to firebase
+//            FirebaseManager.shared.saveMedicationPercentage(data)
+//            loadMedicationRecords()
+//            print("Percentage is calculated")
+//        }
+//    }
     // get the data from firebase
     func loadUserMedications() {
         FirebaseManager.shared.loadUserMedications { medications in
@@ -154,19 +178,28 @@ class ListManager: ObservableObject {
     }
     // save to local
     func saveData() {
-        let appData = AppData(medications: medications, medicationRecords: medicationRecord)
+        let appData = AppData(medications: self.medications, medicationRecords: self.medicationRecords)
         UserDefaults.saveAppData(appData)
         print("Data is saved to local")
     }
     // load from local
     func loadData() {
         if let appData = UserDefaults.loadAppData() {
-            medications = appData.medications
-            medicationRecord = appData.medicationRecords
+            self.medications = appData.medications
+            self.medicationRecords = appData.medicationRecords
         }
         print("Data is loaded from local")
         FirebaseManager.shared.saveMedications(medications)
         calculateMedicationPercentage()
+    }
+    func loadMedicationRecords() {
+        // get the record date from firebase
+        FirebaseManager.shared.loadUserMedicationRecords { records in
+            DispatchQueue.main.async {
+                self.medicationRecords = records
+                self.saveData()
+            }
+        }
     }
     
 }

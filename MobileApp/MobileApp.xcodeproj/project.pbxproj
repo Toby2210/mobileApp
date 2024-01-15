@@ -192,6 +192,7 @@
 		599C2E772B3167800046BEF7 /* MobileApp */ = {
 			isa = PBXGroup;
 			children = (
+				59A1E4902B5562CE00B1FC37 /* LocalSaving */,
 				59D3157E2B4D3A850051C3BA /* Main */,
 				59A1E4872B550A5D00B1FC37 /* Reminder */,
 				59D3157F2B4D3AC60051C3BA /* Calendar */,
@@ -253,14 +254,21 @@
 			path = Reminder;
 			sourceTree = "<group>";
 		};
+		59A1E4902B5562CE00B1FC37 /* LocalSaving */ = {
+			isa = PBXGroup;
+			children = (
+				59A1E48C2B55570000B1FC37 /* UserDefaults.swift */,
+				59A1E48E2B55572B00B1FC37 /* AppData.swift */,
+			);
+			path = LocalSaving;
+			sourceTree = "<group>";
+		};
 		59D3157E2B4D3A850051C3BA /* Main */ = {
 			isa = PBXGroup;
 			children = (
 				599C2E782B3167800046BEF7 /* MobileAppApp.swift */,
 				599C2E7A2B3167800046BEF7 /* ContentView.swift */,
 				59FC6AF02B40013400A7D9A7 /* SettingView.swift */,
-				59A1E48C2B55570000B1FC37 /* UserDefaults.swift */,
-				59A1E48E2B55572B00B1FC37 /* AppData.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
