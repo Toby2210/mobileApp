@@ -10,7 +10,6 @@ import SwiftUI
 struct RecordView: View {
     @EnvironmentObject var dateHolder: DateHolder
     @State private var medicationRecords: [MedicationRecord] = []
-    
     // darw the calendar
     var body: some View
     {
@@ -49,12 +48,18 @@ struct RecordView: View {
             
         }
         .onAppear {
+            if let appData = UserDefaults.loadAppData() {
+                self.medicationRecords = appData.medicationRecords
+            }
+            print("Data is loaded from local - RecordView")
+
             // get the record date from firebase
             FirebaseManager.shared.loadUserMedicationRecords { records in
                 DispatchQueue.main.async {
                     self.medicationRecords = records
                 }
             }
+            print("Data is loaded from Firebase - RecordView")
         }
     }
 }

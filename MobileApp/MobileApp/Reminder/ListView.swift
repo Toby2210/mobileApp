@@ -73,6 +73,7 @@ struct ListView: View {
                 .navigationTitle("Medication List")
                 .navigationBarItems(trailing: EditButton())
                 .onAppear {
+                    listManager.loadData()
                     listManager.loadUserMedications()
                 }
                 

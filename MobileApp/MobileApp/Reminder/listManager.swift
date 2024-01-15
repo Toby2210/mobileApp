@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct Medication: Identifiable {
-    let id = UUID()
+struct Medication: Identifiable, Codable {
+    var id = UUID()
     var name: String    //Drug name
     var takingTime: String  //When to take the drug
     var isTaken: Bool   //Is the drug taken?
@@ -16,8 +16,8 @@ struct Medication: Identifiable {
 }
 
 // percentage of each day about taking drug
-struct MedicationRecord : Identifiable {
-    let id = UUID()
+struct MedicationRecord : Identifiable, Codable {
+    var id = UUID()
     let percentage: Int
     let recordDate: Date
 }
@@ -45,6 +45,8 @@ class ListManager: ObservableObject {
         isAdding = false
         newMedicationName = ""
         newMedicationTakingTime = "00:00"
+        saveData()
+        print("Data is added")
     }
     
     func addFromAI(newName: String) {
@@ -54,6 +56,8 @@ class ListManager: ObservableObject {
         isAdding = false
         newMedicationName = ""
         newMedicationTakingTime = "00:00"
+        saveData()
+        print("Data is added using addFromAI")
     }
     
     // delete a record from the list
@@ -61,6 +65,8 @@ class ListManager: ObservableObject {
         medications.remove(atOffsets: offsets)
         FirebaseManager.shared.saveMedications(medications)
         calculateMedicationPercentage()
+        saveData()
+        print("Data is deleted")
     }
     
     // toggle the status of the drug
@@ -71,12 +77,16 @@ class ListManager: ObservableObject {
             FirebaseManager.shared.saveMedications(medications)
         }
         calculateMedicationPercentage()
+        saveData()
+        print("Data is toggled")
     }
     
     // move the position of the drug from the list
     func move(from source: IndexSet, to destination: Int) {
         medications.move(fromOffsets: source, toOffset: destination)
         FirebaseManager.shared.saveMedications(medications)
+        saveData()
+        print("Data is moved")
     }
     
     // calculate the percentage of today and send it back to the firebase database
@@ -94,6 +104,8 @@ class ListManager: ObservableObject {
             
             // Send to firebase
             FirebaseManager.shared.saveMedicationPercentage(data)
+            saveData()
+            print("Percentage is calculated")
         }
     }
     // get the data from firebase
@@ -120,6 +132,8 @@ class ListManager: ObservableObject {
                 // update the list and send back to firebase
                 FirebaseManager.shared.saveMedications(self.medications)
                 self.calculateMedicationPercentage()
+                self.saveData()
+                print("Data is loaded from Firebase")
             }
         }
     }
@@ -134,7 +148,25 @@ class ListManager: ObservableObject {
                 }
             }
             FirebaseManager.shared.saveMedications(self.medications)
+            saveData()
+            print("Reminder list is sorted")
         }
+    }
+    // save to local
+    func saveData() {
+        let appData = AppData(medications: medications, medicationRecords: medicationRecord)
+        UserDefaults.saveAppData(appData)
+        print("Data is saved to local")
+    }
+    // load from local
+    func loadData() {
+        if let appData = UserDefaults.loadAppData() {
+            medications = appData.medications
+            medicationRecord = appData.medicationRecords
+        }
+        print("Data is loaded from local")
+        FirebaseManager.shared.saveMedications(medications)
+        calculateMedicationPercentage()
     }
     
 }
