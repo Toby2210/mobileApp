@@ -16,6 +16,9 @@ struct SettingView: View {
                 Button(action: {
                                 do {
                                     try Auth.auth().signOut()
+                                    let appData = AppData(medications: [], medicationRecords: [])
+                                    UserDefaults.saveAppData(appData)
+                                    print("Logged out")
                                     isLoggedIn = false
                                 } catch {
                                     print("logout error：\(error.localizedDescription)")

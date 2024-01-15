@@ -189,11 +189,10 @@ class ListManager: ObservableObject {
             self.medicationRecords = appData.medicationRecords
         }
         print("Data is loaded from local")
-        FirebaseManager.shared.saveMedications(medications)
         calculateMedicationPercentage()
     }
+    // get the record date from firebase
     func loadMedicationRecords() {
-        // get the record date from firebase
         FirebaseManager.shared.loadUserMedicationRecords { records in
             DispatchQueue.main.async {
                 self.medicationRecords = records
