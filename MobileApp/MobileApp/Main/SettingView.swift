@@ -18,7 +18,7 @@ struct SettingView: View {
                                     try Auth.auth().signOut()
                                     isLoggedIn = false
                                 } catch {
-                                    print("登出時發生錯誤：\(error.localizedDescription)")
+                                    print("logout error：\(error.localizedDescription)")
                                 }
                             }) {
                     Text("Logout")

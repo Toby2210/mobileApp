@@ -11,7 +11,6 @@ import MapKit
 struct MapView: UIViewRepresentable {
     @StateObject private var locationManager = LocationModel()
     let mapView = MKMapView()
-    let hospitals: [Hospital]
     @State var coordinateRegion: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0, longitude: 0),
                                                                           span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5))
 
@@ -20,7 +19,7 @@ struct MapView: UIViewRepresentable {
         mapView.delegate = context.coordinator
         mapView.showsUserLocation = true
         
-        for hospital in hospitals {
+        for hospital in locationManager.hospitals {
             let annotation = MKPointAnnotation()
             annotation.coordinate = hospital.coordinate
             annotation.title = hospital.name
@@ -34,7 +33,7 @@ struct MapView: UIViewRepresentable {
         // print the location data when the map is updated
         locationManager.printCurrentLocation()
         mapView.removeAnnotations(mapView.annotations)
-        for hospital in hospitals {
+        for hospital in locationManager.hospitals {
             let annotation = MKPointAnnotation()
             annotation.coordinate = hospital.coordinate
             annotation.title = hospital.name

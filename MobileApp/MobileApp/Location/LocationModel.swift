@@ -9,6 +9,12 @@ import SwiftUI
 import Foundation
 import CoreLocation
 import MapKit
+
+struct Hospital {
+    let name: String
+    let coordinate: CLLocationCoordinate2D
+}
+
 class LocationModel: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var authorizationStatus: CLAuthorizationStatus
     
@@ -18,7 +24,6 @@ class LocationModel: NSObject, ObservableObject, CLLocationManagerDelegate {
                                                                                                              longitude: 0), span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02))
     
     private let locationManager: CLLocationManager
-    
     override init() {
         locationManager = CLLocationManager()
         authorizationStatus = locationManager.authorizationStatus
@@ -36,7 +41,11 @@ class LocationModel: NSObject, ObservableObject, CLLocationManagerDelegate {
         
         locationManager.startUpdatingLocation()
     }
-    
+    // hospitals list
+    let hospitals = [
+        Hospital(name: "Tuen Mun Hospital", coordinate: CLLocationCoordinate2D(latitude: 22.40768, longitude: 113.97600)),
+        Hospital(name: "Queen Elizabeth Hospital", coordinate: CLLocationCoordinate2D(latitude: 22.30944, longitude: 114.17556))
+    ]
     // print the location data
     func printCurrentLocation() {
         if let location = locationManager.location {

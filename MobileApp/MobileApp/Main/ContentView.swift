@@ -20,21 +20,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
   }
     
 }
-struct Hospital {
-    let name: String
-    let coordinate: CLLocationCoordinate2D
-}
+
 
 struct ContentView: View {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @State private var isLoggedIn = false   //login or not
     @StateObject private var locationManager = LocationModel()
+    @StateObject private var listManager = ListManager()
     
-    // hospitals list
-    let hospitals = [
-        Hospital(name: "Tuen Mun Hospital", coordinate: CLLocationCoordinate2D(latitude: 22.40768, longitude: 113.97600)),
-        Hospital(name: "Queen Elizabeth Hospital", coordinate: CLLocationCoordinate2D(latitude: 22.30944, longitude: 114.17556))
-    ]
     
     var body: some View {
         if isLoggedIn {
@@ -44,6 +37,7 @@ struct ContentView: View {
                         Image(systemName: "list.bullet")
                         Text("List")
                     }
+                    .environmentObject(listManager)
                 
                 RecordView()
                     .tabItem {
@@ -51,7 +45,7 @@ struct ContentView: View {
                         Text("Record")
                     }
                 
-                MapView(hospitals: hospitals)
+                MapView()
                     .tabItem {
                         Image(systemName: "map")
                         Text("Map")
@@ -61,6 +55,7 @@ struct ContentView: View {
                         Image(systemName: "eye")
                         Text("AI")
                     }
+                    .environmentObject(listManager)
                 
                 SettingView(isLoggedIn: $isLoggedIn)
                     .tabItem {
