@@ -40,6 +40,7 @@
 		59A1E48B2B5518F300B1FC37 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FC6AEC2B40012300A7D9A7 /* MapView.swift */; };
 		59A1E48D2B55570000B1FC37 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A1E48C2B55570000B1FC37 /* UserDefaults.swift */; };
 		59A1E48F2B55572B00B1FC37 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59A1E48E2B55572B00B1FC37 /* AppData.swift */; };
+		59CC0ABB2B56559000138FD5 /* MedicationNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59CC0ABA2B56559000138FD5 /* MedicationNotificationManager.swift */; };
 		59D315662B4695E40051C3BA /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D315652B4695E40051C3BA /* CalendarCell.swift */; };
 		59D315672B4695E40051C3BA /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D315652B4695E40051C3BA /* CalendarCell.swift */; };
 		59D315682B4695E40051C3BA /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D315652B4695E40051C3BA /* CalendarCell.swift */; };
@@ -115,6 +116,7 @@
 		59A1E4832B550A4700B1FC37 /* listManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = listManager.swift; sourceTree = "<group>"; };
 		59A1E48C2B55570000B1FC37 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		59A1E48E2B55572B00B1FC37 /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
+		59CC0ABA2B56559000138FD5 /* MedicationNotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedicationNotificationManager.swift; sourceTree = "<group>"; };
 		59D315652B4695E40051C3BA /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		59D315692B4695FA0051C3BA /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
 		59D3156D2B4696320051C3BA /* DateHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHolder.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 			children = (
 				59FC6AE82B40010B00A7D9A7 /* ListView.swift */,
 				59A1E4832B550A4700B1FC37 /* listManager.swift */,
+				59CC0ABA2B56559000138FD5 /* MedicationNotificationManager.swift */,
 			);
 			path = Reminder;
 			sourceTree = "<group>";
@@ -468,6 +471,7 @@
 				59D315662B4695E40051C3BA /* CalendarCell.swift in Sources */,
 				59A1E4842B550A4700B1FC37 /* listManager.swift in Sources */,
 				59FC6AF12B40013400A7D9A7 /* SettingView.swift in Sources */,
+				59CC0ABB2B56559000138FD5 /* MedicationNotificationManager.swift in Sources */,
 				59FC6AEB2B40011A00A7D9A7 /* RecordView.swift in Sources */,
 				59A1E4732B4FB6F200B1FC37 /* MobileNetV2.mlmodel in Sources */,
 				599C2E792B3167800046BEF7 /* MobileAppApp.swift in Sources */,

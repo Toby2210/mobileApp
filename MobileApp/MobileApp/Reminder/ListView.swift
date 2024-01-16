@@ -75,6 +75,8 @@ struct ListView: View {
                 .onAppear {
                     listManager.loadData()
                     listManager.loadUserMedications()
+                    MedicationNotificationManager.shared.notificationRequest()
+                    MedicationNotificationManager.shared.setNotification(medications: listManager.medications)
                 }
                 
             }

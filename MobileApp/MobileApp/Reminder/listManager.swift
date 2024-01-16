@@ -46,6 +46,7 @@ class ListManager: ObservableObject {
         newMedicationName = ""
         newMedicationTakingTime = "00:00"
         saveData()
+        MedicationNotificationManager.shared.setNotification(medications: medications)
         print("Data is added")
     }
     
@@ -57,6 +58,7 @@ class ListManager: ObservableObject {
         newMedicationName = ""
         newMedicationTakingTime = "00:00"
         saveData()
+        MedicationNotificationManager.shared.setNotification(medications: medications)
         print("Data is added using addFromAI")
     }
     
@@ -66,6 +68,7 @@ class ListManager: ObservableObject {
         FirebaseManager.shared.saveMedications(medications)
         calculateMedicationPercentage()
         saveData()
+        MedicationNotificationManager.shared.setNotification(medications: medications)
         print("Data is deleted")
     }
     
@@ -78,6 +81,7 @@ class ListManager: ObservableObject {
         }
         calculateMedicationPercentage()
         saveData()
+        MedicationNotificationManager.shared.setNotification(medications: medications)
         print("Data is toggled")
     }
     
@@ -157,6 +161,7 @@ class ListManager: ObservableObject {
                 FirebaseManager.shared.saveMedications(self.medications)
                 self.calculateMedicationPercentage()
                 self.saveData()
+                MedicationNotificationManager.shared.setNotification(medications: self.medications)
                 print("Data is loaded from Firebase")
             }
         }
@@ -188,6 +193,7 @@ class ListManager: ObservableObject {
             self.medications = appData.medications
             self.medicationRecords = appData.medicationRecords
         }
+        MedicationNotificationManager.shared.setNotification(medications: medications)
         print("Data is loaded from local")
         calculateMedicationPercentage()
     }
