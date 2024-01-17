@@ -37,12 +37,13 @@ struct ListView: View {
                                 .padding()
                         }
                     }
-                //place for adding new drug to drugs list
                     VStack {
+                        // sort the list
                         Button(action: {listManager.sort()
                         },label: {
                             Text("Sort by taking time")
                         })
+                        //place for adding new drug to drugs list
                         HStack {
                             TextField("Name", text: $listManager.newMedicationName)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -73,8 +74,10 @@ struct ListView: View {
                 .navigationTitle("Medication List")
                 .navigationBarItems(trailing: EditButton())
                 .onAppear {
+                    // first loading the local data, it will have a smaller loading time campare with using internet
                     listManager.loadData()
                     listManager.loadUserMedications()
+                    // after the list is loaded, a notification is set
                     MedicationNotificationManager.shared.notificationRequest()
                     MedicationNotificationManager.shared.setNotification(medications: listManager.medications)
                 }

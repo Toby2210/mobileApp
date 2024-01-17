@@ -42,6 +42,7 @@ struct AiAddingView: View {
             .padding()
         }
         .onAppear {
+            // when this view is loaded, a medications data is load
             listManager.loadUserMedications()
         }
     }
