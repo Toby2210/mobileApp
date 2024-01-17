@@ -14,6 +14,10 @@ struct AiAddingView: View {
     var body: some View {
         VStack {
             Text("You are adding \(newItem) to your list")
+                .multilineTextAlignment(.center)
+            TextField(newItem, text: $newItem)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .multilineTextAlignment(.center)
             Text("Please select the taking time")
             Picker("Taking time", selection: $listManager.newMedicationTakingTime) {
                 ForEach(listManager.timeIntervals, id: \.self) { time in
