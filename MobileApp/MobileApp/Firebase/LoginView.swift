@@ -9,12 +9,12 @@ import SwiftUI
 import FirebaseAuth
 
 struct LoginView: View {
-    @State private var email: String = ""
-    @State private var password: String = ""
-    @State private var confirmPassword: String = ""
-    @State private var error: String = ""
+    @State public var email: String = ""
+    @State public var password: String = ""
+    @State public var confirmPassword: String = ""
+    @State public var error: String = ""
     @Binding var isLoggedIn: Bool
-    @State private var isRegisterMode = false
+    @State public var isRegisterMode = false
     
     var body: some View {
         VStack {
