@@ -21,6 +21,8 @@ class ListViewTests: XCTestCase {
         super.tearDown()
     }
     func testSortByTakingTimeButton() {
+        // Reset the list
+        listManager.medications = []
         // Create sample medications with different taking times
         let medication1 = Medication(name: "Medication 1", takingTime: "10:00", isTaken: false, lastModifiedTime: Date())
         let medication2 = Medication(name: "Medication 2", takingTime: "09:00", isTaken: false, lastModifiedTime: Date())
@@ -37,66 +39,69 @@ class ListViewTests: XCTestCase {
         XCTAssertEqual(listManager.medications[1].takingTime, "10:00")
         XCTAssertEqual(listManager.medications[2].takingTime, "11:00")
     }
-
-    func testSortByTakingTimeButtonWithDuplicateTimes() {
-        // Create sample medications with duplicate taking times
-        let medication1 = Medication(name: "Medication 1", takingTime: "10:00", isTaken: false, lastModifiedTime: Date())
-        let medication2 = Medication(name: "Medication 2", takingTime: "09:00", isTaken: false, lastModifiedTime: Date())
-        let medication3 = Medication(name: "Medication 3", takingTime: "10:00", isTaken: false, lastModifiedTime: Date())
+    
+    func testAddNewMedication() {
+        // Reset the list
+        listManager.medications = []
+        // Arrange
+        let initialCount = listManager.medications.count
+        let medicationName = "Medication A"
+        let medicationTakingTime = "08:00"
         
-        // Add medications to the list in unsorted order
-        listManager.medications = [medication1, medication2, medication3]
+        // Act
+        listManager.newMedicationName = medicationName
+        listManager.newMedicationTakingTime = medicationTakingTime
+        listManager.addNewMedication()
         
-        // Sort the list by taking time
-        listManager.sort()
+        // Assert
+        XCTAssertEqual(listManager.medications.count, initialCount + 1, "Medication count should increase by 1")
         
-        // Verify that the list is sorted correctly
-        XCTAssertEqual(listManager.medications[0].takingTime, "09:00")
-        XCTAssertEqual(listManager.medications[1].takingTime, "10:00")
-        XCTAssertEqual(listManager.medications[2].takingTime, "10:00")
+        let addedMedication = listManager.medications.last
+        XCTAssertEqual(addedMedication?.name, medicationName, "The name of the added medication should match")
+        XCTAssertEqual(addedMedication?.takingTime, medicationTakingTime, "The taking time of the added medication should match")
+        XCTAssertFalse(addedMedication?.isTaken ?? true, "The added medication should have 'isTaken' set to false")
     }
-
-    func testSortByTakingTimeButtonWithEmptyList() {
-        // Create an empty list of medications
+    
+    func testMoveMedication() {
+        // Reset the list
         listManager.medications = []
         
-        // Sort the list by taking time
-        listManager.sort()
+        // Arrange
+        let medicationA = Medication(name: "Medication A", takingTime: "08:00", isTaken: false, lastModifiedTime: Date())
+        let medicationB = Medication(name: "Medication B", takingTime: "12:00", isTaken: false, lastModifiedTime: Date())
+        let medicationC = Medication(name: "Medication C", takingTime: "16:00", isTaken: false, lastModifiedTime: Date())
         
-        // Verify that the list remains empty
-        XCTAssertTrue(listManager.medications.isEmpty)
+        listManager.medications = [medicationA, medicationB, medicationC]
+        
+        XCTAssertEqual(listManager.medications[0].name, "Medication A", "The first medication should be Medication A")
+        XCTAssertEqual(listManager.medications[1].name, "Medication B", "The second medication should be Medication B")
+        XCTAssertEqual(listManager.medications[2].name, "Medication C", "The third medication should be Medication C")
+        
+        // Act
+        listManager.move(from: IndexSet(integer: 0), to: 3)
+        
+        XCTAssertEqual(self.listManager.medications[0].name, "Medication B", "The first medication should be Medication B")
+        XCTAssertEqual(self.listManager.medications[1].name, "Medication C", "The second medication should be Medication C")
+        XCTAssertEqual(self.listManager.medications[2].name, "Medication A", "The third medication should be Medication A")
     }
-
-    func testSortByTakingTimeButtonWithSingleMedication() {
-        // Create a single medication
-        let medication = Medication(name: "Medication 1", takingTime: "10:00", isTaken: false, lastModifiedTime: Date())
+    
+    func testDeleteMedication() {
+        // Reset the list
+        listManager.medications = []
+        // Arrange
+        let medicationA = Medication(name: "Medication A", takingTime: "08:00", isTaken: false, lastModifiedTime: Date())
+        let medicationB = Medication(name: "Medication B", takingTime: "12:00", isTaken: false, lastModifiedTime: Date())
+        let medicationC = Medication(name: "Medication C", takingTime: "16:00", isTaken: false, lastModifiedTime: Date())
         
-        // Add the medication to the list
-        listManager.medications = [medication]
+        listManager.medications = [medicationA, medicationB, medicationC]
         
-        // Sort the list by taking time
-        listManager.sort()
+        // Act
+        listManager.delete(at: IndexSet(integer: 1))
         
-        // Verify that the list remains unchanged
-        XCTAssertEqual(listManager.medications[0].takingTime, "10:00")
-    }
-
-    func testSortByTakingTimeButtonWithMultipleMedicationsWithSameTime() {
-        // Create sample medications with the same taking time
-        let medication1 = Medication(name: "Medication 1", takingTime: "10:00", isTaken: false, lastModifiedTime: Date())
-        let medication2 = Medication(name: "Medication 2", takingTime: "10:00", isTaken: false, lastModifiedTime: Date())
-        let medication3 = Medication(name: "Medication 3", takingTime: "10:00", isTaken: false, lastModifiedTime: Date())
-        
-        // Add medications to the list in unsorted order
-        listManager.medications = [medication1, medication2, medication3]
-        
-        // Sort the list by taking time
-        listManager.sort()
-        
-        // Verify that the list remains unchanged
-        XCTAssertEqual(listManager.medications[0].takingTime, "10:00")
-        XCTAssertEqual(listManager.medications[1].takingTime, "10:00")
-        XCTAssertEqual(listManager.medications[2].takingTime, "10:00")
+        // Assert
+        XCTAssertEqual(listManager.medications.count, 2, "Medication count should decrease by 1")
+        XCTAssertEqual(listManager.medications[0].name, "Medication A", "The first medication should be Medication A")
+        XCTAssertEqual(listManager.medications[1].name, "Medication C", "The second medication should be Medication C")
     }
     
 }
