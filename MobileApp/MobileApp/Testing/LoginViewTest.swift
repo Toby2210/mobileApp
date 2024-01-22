@@ -7,7 +7,7 @@
 
 import XCTest
 @testable import MobileApp
-
+import FirebaseAuth
 class LoginViewUITests: XCTestCase {
     var app: XCUIApplication!
 
@@ -19,7 +19,6 @@ class LoginViewUITests: XCTestCase {
     func testLoginViewUI() throws {
         // Launch the app
         app.launch()
-        
         // Verify the UI elements in LoginView
         XCTAssertTrue(app.staticTexts["Login"].exists)
         XCTAssertTrue(app.textFields["Email"].exists)
